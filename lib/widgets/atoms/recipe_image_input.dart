@@ -6,7 +6,7 @@ import 'dart:html' as html;
 import 'dart:convert'; // For base64 encoding
 
 class RecipePictureInput extends StatefulWidget {
-  const RecipePictureInput({Key? key}) : super(key: key);
+  const RecipePictureInput({super.key});
 
   @override
   State<RecipePictureInput> createState() => _RecipePictureInputState();
@@ -19,10 +19,12 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
 
   // Méthode pour sélectionner une image (mobile)
   Future<void> _pickImageMobile() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        _selectedImage = File(pickedFile.path); // Stockage de l'image sélectionnée
+        _selectedImage =
+            File(pickedFile.path); // Stockage de l'image sélectionnée
         _imageBase64 = null; // Clear the base64 image for mobile
       });
     }
@@ -30,9 +32,11 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
 
   // Méthode pour sélectionner une image (web)
   Future<void> _pickImageWeb() async {
-    final html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    final html.FileUploadInputElement uploadInput =
+        html.FileUploadInputElement();
     uploadInput.accept = 'image/*'; // Seulement les images
-    uploadInput.click(); // Ouvre la boîte de dialogue pour sélectionner un fichier
+    uploadInput
+        .click(); // Ouvre la boîte de dialogue pour sélectionner un fichier
 
     uploadInput.onChange.listen((e) async {
       final files = uploadInput.files;
@@ -42,7 +46,8 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
       reader.readAsDataUrl(files[0]); // Read as data URL for base64 encoding
       reader.onLoadEnd.listen((e) {
         setState(() {
-          _imageBase64 = reader.result as String?; // Store the base64 image data
+          _imageBase64 =
+              reader.result as String?; // Store the base64 image data
           _selectedImage = null; // Clear the mobile file if any
         });
       });
@@ -71,30 +76,30 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
         ),
         child: _selectedImage == null && _imageBase64 == null
             ? const Center(
-          child: Text(
-            'Ajouter une image',
-            style: TextStyle(color: Colors.black54),
-          ),
-        )
+                child: Text(
+                  'Ajouter une image',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              )
             : ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: kIsWeb
-              ? _imageBase64 == null
-              ? const SizedBox()
-              : Image.memory(
-            // Remove base64 header before decoding
-            base64Decode(_imageBase64!.split(',').last),
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          )
-              : Image.file(
-            _selectedImage!,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-        ),
+                borderRadius: BorderRadius.circular(8),
+                child: kIsWeb
+                    ? _imageBase64 == null
+                        ? const SizedBox()
+                        : Image.memory(
+                            // Remove base64 header before decoding
+                            base64Decode(_imageBase64!.split(',').last),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          )
+                    : Image.file(
+                        _selectedImage!,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+              ),
       ),
     );
   }

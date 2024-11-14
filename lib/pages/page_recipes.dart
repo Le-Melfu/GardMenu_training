@@ -7,7 +7,7 @@ import '../widgets/atoms/recipe_model.dart'; // Import the Recipe model
 import '../widgets/molecules/recipe_modal.dart'; // Import the RecipeModal widget
 
 class RecipePage extends StatefulWidget {
-  const RecipePage({Key? key}) : super(key: key);
+  const RecipePage({super.key});
 
   @override
   State<RecipePage> createState() => _RecipePageState();
@@ -15,6 +15,7 @@ class RecipePage extends StatefulWidget {
 
 class _RecipePageState extends State<RecipePage> {
   List<Recipe> _recipes = []; // List to hold all recipes
+  @override
   void initState() {
     super.initState();
     _loadRecipes(); // Charger les recettes au démarrage de l'appli
@@ -81,8 +82,8 @@ class _RecipePageState extends State<RecipePage> {
             child: _recipes.isEmpty
                 ? const Center(child: Text('Aucune recette ajoutée.'))
                 : Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: GridView.builder(
+                    padding: const EdgeInsets.all(12.0),
+                    child: GridView.builder(
                       itemCount: _recipes.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -95,7 +96,7 @@ class _RecipePageState extends State<RecipePage> {
                         return RecipeCard(recipe: _recipes[index]);
                       },
                     ),
-                ),
+                  ),
           ),
         ],
       ),

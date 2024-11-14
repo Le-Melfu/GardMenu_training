@@ -9,13 +9,14 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           elevation: 4,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -40,14 +41,13 @@ class RecipeCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
 
-
-
                 // Ingrédients
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Ingrédients :', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...recipe.ingredients.map((e) => Text(e)).toList(),
+                    const Text('Ingrédients :',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    ...recipe.ingredients.map((e) => Text(e)),
                   ],
                 ),
                 const SizedBox(height: 8),
