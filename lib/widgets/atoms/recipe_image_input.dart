@@ -22,24 +22,21 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
 
   get compressedFile => null;
 
-  // Method to select an image (mobile)
   Future<void> _pickImageMobile() async {
     try {
       final XFile? pickedFile =
           await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        // Optional: Compress the image
         final compressedFile = await FlutterImageCompress.compressAndGetFile(
           pickedFile.path,
-          pickedFile.path + '_compressed.jpg', // Specify the output path
-          quality: 80, // Adjust the quality as needed
+          '${pickedFile.path}_compressed.jpg',
+          quality: 80,
         );
 
         _updateImage((compressedFile ?? File(pickedFile.path)) as File?);
       }
     } catch (e) {
-      print('Error picking image: $e');
-      // Handle the error, e.g., show a snackbar
+      debugPrint('Error picking image: $e');
     }
   }
 
@@ -47,21 +44,14 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
     setState(() {
       _selectedImage = XFile(imageFile!.path);
     });
-    debugPrint('Before Base64 conversion: _imageBase64 = $_imageBase64');
-
-    // Convert to Base64 outside setState
     _imageBase64 = base64Encode((await imageFile?.readAsBytes()) as List<int>);
 
-    debugPrint('After Base64 conversion: _imageBase64 = $_imageBase64');
-
-    // If you need to update the UI after Base64 conversion, call setState again
     setState(() {
       widget.onImageSelected(_imageBase64);
       debugPrint('Callback called with _imageBase64 = $_imageBase64');
     });
   }
 
-  // Method to select an image (web)
   Future<void> _pickImageWeb() async {
     try {
       final html.FileUploadInputElement uploadInput =
@@ -85,12 +75,10 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
         });
       });
     } catch (e) {
-      print('Error picking image on web: $e');
-      // Handle the error
+      debugPrint('Error picking image on web: $e');
     }
   }
 
-  // Method to handle image adding, depending on the platform
   Future<void> _pickImage() async {
     if (kIsWeb) {
       _pickImageWeb(); // If on the web, use the web handler

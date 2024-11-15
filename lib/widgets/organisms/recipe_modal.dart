@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../atoms/recipe_ingredient_input.dart';
 import '../atoms/recipe_steps_input.dart';
 import '../atoms/recipe_image_input.dart';
-import '../atoms/recipe_model.dart'; // Import the Recipe class
+import '../../models/recipe_model.dart'; // Import the Recipe class
 
 class RecipeModal extends StatefulWidget {
   final Function(Recipe) onAddRecipe; // Callback function to add a recipe
@@ -17,7 +17,7 @@ class _RecipeModalState extends State<RecipeModal> {
   final TextEditingController _nameController = TextEditingController();
   final List<RecipeIngredientInput> _ingredients = [RecipeIngredientInput()];
   final List<RecipeStepInput> _steps = [RecipeStepInput(stepNumber: 1)];
-  String? _imageBase64; // This will hold the base64 image data
+  String? _imageBase64;
 
   void _handleImageSelected(String? base64Image) {
     setState(() {
@@ -25,21 +25,21 @@ class _RecipeModalState extends State<RecipeModal> {
     });
   }
 
-  // Method to add an ingredient
+  // Ajout d'un input d'ingrédient
   void _addIngredient() {
     setState(() {
       _ingredients.add(RecipeIngredientInput());
     });
   }
 
-  // Method to add a step
+  // Ajout d'une étape de recette
   void _addStep() {
     setState(() {
       _steps.add(RecipeStepInput(stepNumber: _steps.length + 1));
     });
   }
 
-  // Method to handle adding the recipe
+  // Méthode d'ajout d'une recette avec construction de la nouvelle recette
   void _addRecipe() {
     final recipe = Recipe(
       name: _nameController.text,
@@ -48,15 +48,8 @@ class _RecipeModalState extends State<RecipeModal> {
       image: _imageBase64,
     );
 
-    debugPrint('Recipe Modal Recipe Creation Data:');
-    debugPrint('  Name: ${recipe.name}');
-    debugPrint('  Ingredients: ${recipe.ingredients}');
-    debugPrint('  Steps: ${recipe.steps}');
-    debugPrint(
-        '  Image (Base64): ${recipe.image != null ? 'Data present' : 'Null'}');
-
-    widget.onAddRecipe(recipe);
-    Navigator.of(context).pop();
+    widget.onAddRecipe(recipe); //Ajout de la nouvelle recette à la liste
+    Navigator.of(context).pop(); //Sortie de la modale
   }
 
   @override
@@ -69,12 +62,12 @@ class _RecipeModalState extends State<RecipeModal> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Name input
               Row(
                 children: [
                   Expanded(
                     child: Column(
                       children: [
+                        // Input du nom de la recette
                         TextField(
                           controller: _nameController,
                           decoration: const InputDecoration(
@@ -86,8 +79,9 @@ class _RecipeModalState extends State<RecipeModal> {
 
                         // Ingredients section
                         Column(
+                          // Input des ingrédients avec le bouton d'ajout pour plusieurs ingrédients
                           children: [
-                            ..._ingredients, // List of ingredient inputs
+                            ..._ingredients,
                             Align(
                               alignment: Alignment.centerRight,
                               child: IconButton(
@@ -102,6 +96,8 @@ class _RecipeModalState extends State<RecipeModal> {
                     ),
                   ),
                   SizedBox(width: 16),
+
+                  // Ajout d'une image pour la recette
                   Expanded(
                       child: RecipePictureInput(
                           onImageSelected: _handleImageSelected)),
@@ -109,10 +105,10 @@ class _RecipeModalState extends State<RecipeModal> {
               ),
               const SizedBox(height: 16),
 
-              // Steps section
+              // Input des étapes de confection avec le bouton d'ajout pour plusieurs étapes
               Column(
                 children: [
-                  ..._steps, // List of step inputs
+                  ..._steps,
                   Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
@@ -124,7 +120,7 @@ class _RecipeModalState extends State<RecipeModal> {
               ),
               const SizedBox(height: 16),
 
-              // Add Recipe Button
+              // Bouton d'ajout de la recette
               ElevatedButton(
                 onPressed: _addRecipe,
                 child: const Text('Ajouter la recette'),

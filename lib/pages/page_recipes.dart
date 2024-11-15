@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gardmenu_training/widgets/atoms/recipe_card.dart';
+import 'package:gardmenu_training/widgets/molecules/recipe_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../widgets/atoms/recipe_model.dart'; // Import the Recipe model
-import '../widgets/molecules/recipe_modal.dart'; // Import the RecipeModal widget
+import '../models/recipe_model.dart';
+import '../widgets/organisms/recipe_modal.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({super.key});
@@ -14,11 +14,12 @@ class RecipePage extends StatefulWidget {
 }
 
 class _RecipePageState extends State<RecipePage> {
-  List<Recipe> _recipes = []; // List to hold all recipes
+  List<Recipe> _recipes = [];
+
   @override
   void initState() {
     super.initState();
-    _loadRecipes(); // Charger les recettes au démarrage de l'appli
+    _loadRecipes();
   }
 
   // Fonction pour sauvegarder les recettes
@@ -40,7 +41,7 @@ class _RecipePageState extends State<RecipePage> {
     }
   }
 
-  // Function to add a recipe
+  // Fonction pour ajouter une recette
   void _addRecipe(Recipe recipe) {
     setState(() {
       _recipes.add(recipe);
@@ -48,14 +49,14 @@ class _RecipePageState extends State<RecipePage> {
     _saveRecipes();
   }
 
-  // Function to open the modal
+  // Fonction pour ouvrir la modale
   void _openRecipeModal() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return RecipeModal(
             onAddRecipe:
-                _addRecipe); // Pass the _addRecipe function to the modal
+                _addRecipe); // Passage de la fonction d'ajout à la modale
       },
     );
   }
@@ -68,16 +69,15 @@ class _RecipePageState extends State<RecipePage> {
       ),
       body: Column(
         children: [
-          // Button above the list
+          // Bouton d'ouverture de la modale
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: _openRecipeModal,
-              // Open the modal when the button is pressed
               child: const Text('Ajouter une recette'),
             ),
           ),
-          // List of recipes
+          // Liste des recettes en GRID
           Expanded(
             child: _recipes.isEmpty
                 ? const Center(child: Text('Aucune recette ajoutée.'))

@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/functions/build_image.dart';
 import 'package:gardmenu_training/pages/page_recipe_detail.dart';
-import 'package:gardmenu_training/widgets/atoms/recipe_model.dart';
-import '../../functions/buildImage.dart';
-import '../atoms/recipe_model.dart';
+import 'package:gardmenu_training/models/recipe_model.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
@@ -37,29 +32,14 @@ class RecipeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Image de la recette (si disponible)
-                if (recipe.image != null)
-                  if (recipe.image != null && recipe.image!.isNotEmpty)
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: kIsWeb
-                            ? recipe.image == null
-                                ? const SizedBox()
-                                : Image.memory(
-                                    // Remove base64 header before decoding
-                                    base64Decode(recipe.image!.split(',').last),
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  )
-                            : Image.file(
-                                recipe.image! as File,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                              ),
-                      ),
+
+                if (recipe.image != null && recipe.image!.isNotEmpty)
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: BuildImage(base64Image: recipe.image!),
                     ),
+                  ),
                 const SizedBox(height: 8),
                 // Titre de la recette
                 Padding(

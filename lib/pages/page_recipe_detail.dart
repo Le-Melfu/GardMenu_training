@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import '../widgets/atoms/recipe_model.dart'; // Import your Recipe model
+import '../models/recipe_model.dart'; // Import your Recipe model
 
 class RecipeDetailPage extends StatelessWidget {
   final Recipe recipe;
@@ -19,7 +19,7 @@ class RecipeDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display the image if available
+            // Image de la recette
             if (recipe.image != null)
               Image.memory(
                 base64Decode(recipe.image!.split(',').last),
@@ -30,7 +30,7 @@ class RecipeDetailPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Display the ingredients
+            // Ingrédients
             Text(
               'Ingredients:',
               style: Theme.of(context).textTheme.titleLarge,
@@ -40,7 +40,7 @@ class RecipeDetailPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Display the steps
+            // Etapes
             Text(
               'Steps:',
               style: Theme.of(context).textTheme.titleLarge,
