@@ -1,7 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import '../models/recipe_model.dart'; // Import your Recipe model
+import '../models/recipe_model.dart';
 
 class RecipeDetailPage extends StatelessWidget {
   final Recipe recipe;

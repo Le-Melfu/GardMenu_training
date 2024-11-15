@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../atoms/recipe_ingredient_input.dart';
 import '../atoms/recipe_steps_input.dart';
 import '../atoms/recipe_image_input.dart';
-import '../../models/recipe_model.dart'; // Import the Recipe class
+import '../../models/recipe_model.dart';
 
 class RecipeModal extends StatefulWidget {
-  final Function(Recipe) onAddRecipe; // Callback function to add a recipe
+  final Function(Recipe) onAddRecipe;
 
   const RecipeModal({super.key, required this.onAddRecipe});
 
@@ -77,7 +77,7 @@ class _RecipeModalState extends State<RecipeModal> {
                         ),
                         const SizedBox(height: 16),
 
-                        // Ingredients section
+                        // Section Ingredients
                         Column(
                           // Input des ingrédients avec le bouton d'ajout pour plusieurs ingrédients
                           children: [
@@ -105,7 +105,7 @@ class _RecipeModalState extends State<RecipeModal> {
               ),
               const SizedBox(height: 16),
 
-              // Input des étapes de confection avec le bouton d'ajout pour plusieurs étapes
+              // Section Input des étapes de confection avec le bouton d'ajout pour plusieurs étapes
               Column(
                 children: [
                   ..._steps,

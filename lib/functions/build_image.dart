@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 class BuildImage extends StatelessWidget {
-  final String? base64Image; // Make base64Image nullable
-  final File? imageFile; // Add imageFile for mobile
+  final String? base64Image;
+  final File? imageFile;
   final double height;
   final double width;
   final BoxFit fit;
@@ -24,7 +24,6 @@ class BuildImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (kIsWeb && base64Image != null) {
       try {
-        // Décodage de l'image en base64 pour le web
         final decodedBytes = base64Decode(base64Image!.split(',').last);
         return Image.memory(
           decodedBytes,
@@ -36,7 +35,6 @@ class BuildImage extends StatelessWidget {
           },
         );
       } catch (e) {
-        // Affichage de l'erreur dans la console pour le debug
         debugPrint('Erreur de décodage de l\'image : $e');
         return const Icon(Icons.broken_image, size: 150);
       }
