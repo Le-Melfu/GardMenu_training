@@ -15,6 +15,7 @@ class GardMenu extends StatelessWidget {
       title: 'Gard Menu',
       theme: ThemeData(
         primarySwatch: Colors.green,
+        fontFamily: 'Roboto',
       ),
       home: const HomePage(),
     );
@@ -79,7 +80,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
-
-

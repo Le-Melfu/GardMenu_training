@@ -25,6 +25,7 @@ class RecipeCard extends StatelessWidget {
             );
           },
           child: Card(
+            color: Color.fromARGB(255, 255, 146, 106),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             elevation: 4,
@@ -36,7 +37,10 @@ class RecipeCard extends StatelessWidget {
                 if (recipe.image != null && recipe.image!.isNotEmpty)
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                      ),
                       child: BuildImage(base64Image: recipe.image!),
                     ),
                   ),
@@ -44,12 +48,13 @@ class RecipeCard extends StatelessWidget {
                 // Titre de la recette
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 22.0, bottom: 8.0, right: 8.0, top: 8.0),
+                      left: 22.0, bottom: 16.0, right: 8.0, top: 8.0),
                   child: Text(
                     recipe.name,
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Roboto',
                     ),
                   ),
                 ),
