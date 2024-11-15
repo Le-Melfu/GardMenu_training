@@ -23,7 +23,7 @@ class RecipeDetailPage extends StatelessWidget {
               Image.memory(
                 base64Decode(recipe.image!.split(',').last),
                 fit: BoxFit.cover,
-                height: 200,
+                height: 220,
                 width: double.infinity,
               ),
 
@@ -41,7 +41,7 @@ class RecipeDetailPage extends StatelessWidget {
 
             // Etapes
             Text(
-              'Steps:',
+              'Étapes :',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
