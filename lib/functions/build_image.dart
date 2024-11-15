@@ -10,9 +10,11 @@ class BuildImage extends StatelessWidget {
   final double height;
   final double width;
   final BoxFit fit;
+  final String? assetPath;
 
   const BuildImage({
     super.key,
+    this.assetPath,
     this.base64Image,
     this.imageFile,
     this.height = 150,
@@ -22,7 +24,12 @@ class BuildImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb && base64Image != null) {
+    if (assetPath != null) {
+      return Image(
+        image: AssetImage(assetPath!),
+        fit: fit,
+      );
+    } else if (kIsWeb && base64Image != null) {
       try {
         final decodedBytes = base64Decode(base64Image!.split(',').last);
         return Image.memory(

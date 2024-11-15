@@ -93,7 +93,7 @@ class _RecipePageState extends State<RecipePage> {
                         childAspectRatio: 1, // Ratio largeur/hauteur
                       ),
                       itemBuilder: (context, index) {
-                        return RecipeCard(recipe: _recipes[index]);
+                        return RecipeCardWidget(recipe: _recipes[index]);
                       },
                     ),
                   ),

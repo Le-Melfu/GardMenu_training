@@ -3,10 +3,10 @@ import 'package:gardmenu_training/functions/build_image.dart';
 import 'package:gardmenu_training/pages/page_recipe_detail.dart';
 import 'package:gardmenu_training/models/recipe_model.dart';
 
-class RecipeCard extends StatelessWidget {
+class RecipeCardWidget extends StatelessWidget {
   final Recipe recipe;
 
-  const RecipeCard({super.key, required this.recipe});
+  const RecipeCardWidget({super.key, required this.recipe});
 
   @override
   Widget build(BuildContext context) {
