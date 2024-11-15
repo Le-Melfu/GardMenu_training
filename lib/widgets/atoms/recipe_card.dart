@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/pages/page_recipe_detail.dart';
+import 'package:gardmenu_training/widgets/atoms/recipe_model.dart';
 import '../../functions/buildImage.dart';
 import '../atoms/recipe_model.dart';
 
@@ -14,48 +20,58 @@ class RecipeCard extends StatelessWidget {
       height: double.infinity,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          elevation: 4,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RecipeDetailPage(recipe),
+              ),
+            );
+          },
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            elevation: 4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Image de la recette (si disponible)
                 if (recipe.image != null)
                   if (recipe.image != null && recipe.image!.isNotEmpty)
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: BuildImage(base64Image: recipe.image!),
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: kIsWeb
+                            ? recipe.image == null
+                                ? const SizedBox()
+                                : Image.memory(
+                                    // Remove base64 header before decoding
+                                    base64Decode(recipe.image!.split(',').last),
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  )
+                            : Image.file(
+                                recipe.image! as File,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                      ),
                     ),
                 const SizedBox(height: 8),
                 // Titre de la recette
-                Text(
-                  recipe.name,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22.0, bottom: 8.0, right: 8.0, top: 8.0),
+                  child: Text(
+                    recipe.name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-
-                // Ingrédients
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Ingrédients :',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...recipe.ingredients.map((e) => Text(e)),
-                  ],
-                ),
-                const SizedBox(height: 8),
-
-                // Étapes
-                Text(
-                  'Étapes : ${recipe.steps.length} étape(s)',
-                  style: const TextStyle(fontSize: 14),
                 ),
               ],
             ),

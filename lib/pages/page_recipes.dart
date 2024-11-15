@@ -87,7 +87,7 @@ class _RecipePageState extends State<RecipePage> {
                       itemCount: _recipes.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Nombre de colonnes
+                        crossAxisCount: 3, // Nombre de colonnes
                         crossAxisSpacing: 16.0, // Espacement horizontal
                         mainAxisSpacing: 16.0, // Espacement vertical
                         childAspectRatio: 1, // Ratio largeur/hauteur

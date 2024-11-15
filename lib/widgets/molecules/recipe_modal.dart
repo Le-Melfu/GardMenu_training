@@ -19,6 +19,12 @@ class _RecipeModalState extends State<RecipeModal> {
   final List<RecipeStepInput> _steps = [RecipeStepInput(stepNumber: 1)];
   String? _imageBase64; // This will hold the base64 image data
 
+  void _handleImageSelected(String? base64Image) {
+    setState(() {
+      _imageBase64 = base64Image;
+    });
+  }
+
   // Method to add an ingredient
   void _addIngredient() {
     setState(() {
@@ -35,15 +41,19 @@ class _RecipeModalState extends State<RecipeModal> {
 
   // Method to handle adding the recipe
   void _addRecipe() {
-    debugPrint(
-        'Image encodée (Base64) : ${_imageBase64?.substring(0, 100)}...'); // Affiche les 100 premiers caractères
-
     final recipe = Recipe(
       name: _nameController.text,
       ingredients: _ingredients.map((input) => input.ingredient).toList(),
       steps: _steps.map((input) => input.controller.text).toList(),
       image: _imageBase64,
     );
+
+    debugPrint('Recipe Modal Recipe Creation Data:');
+    debugPrint('  Name: ${recipe.name}');
+    debugPrint('  Ingredients: ${recipe.ingredients}');
+    debugPrint('  Steps: ${recipe.steps}');
+    debugPrint(
+        '  Image (Base64): ${recipe.image != null ? 'Data present' : 'Null'}');
 
     widget.onAddRecipe(recipe);
     Navigator.of(context).pop();
@@ -92,7 +102,9 @@ class _RecipeModalState extends State<RecipeModal> {
                     ),
                   ),
                   SizedBox(width: 16),
-                  Expanded(child: RecipePictureInput()),
+                  Expanded(
+                      child: RecipePictureInput(
+                          onImageSelected: _handleImageSelected)),
                 ],
               ),
               const SizedBox(height: 16),

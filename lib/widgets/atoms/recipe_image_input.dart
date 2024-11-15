@@ -4,62 +4,98 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:html' as html;
 import 'dart:convert'; // For base64 encoding
+// Import for image compression (optional)
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class RecipePictureInput extends StatefulWidget {
-  const RecipePictureInput({super.key});
+  final Function(String?) onImageSelected;
+  const RecipePictureInput({super.key, required this.onImageSelected});
 
   @override
   State<RecipePictureInput> createState() => _RecipePictureInputState();
 }
 
 class _RecipePictureInputState extends State<RecipePictureInput> {
-  File? _selectedImage;
+  XFile? _selectedImage;
   final ImagePicker _picker = ImagePicker();
   String? _imageBase64;
 
-  // Méthode pour sélectionner une image (mobile)
+  get compressedFile => null;
+
+  // Method to select an image (mobile)
   Future<void> _pickImageMobile() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _selectedImage =
-            File(pickedFile.path); // Stockage de l'image sélectionnée
-        _imageBase64 = null; // Clear the base64 image for mobile
-      });
+    try {
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        // Optional: Compress the image
+        final compressedFile = await FlutterImageCompress.compressAndGetFile(
+          pickedFile.path,
+          pickedFile.path + '_compressed.jpg', // Specify the output path
+          quality: 80, // Adjust the quality as needed
+        );
+
+        _updateImage((compressedFile ?? File(pickedFile.path)) as File?);
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+      // Handle the error, e.g., show a snackbar
     }
   }
 
-  // Méthode pour sélectionner une image (web)
-  Future<void> _pickImageWeb() async {
-    final html.FileUploadInputElement uploadInput =
-        html.FileUploadInputElement();
-    uploadInput.accept = 'image/*'; // Seulement les images
-    uploadInput
-        .click(); // Ouvre la boîte de dialogue pour sélectionner un fichier
+  Future<void> _updateImage(File? imageFile) async {
+    setState(() {
+      _selectedImage = XFile(imageFile!.path);
+    });
+    debugPrint('Before Base64 conversion: _imageBase64 = $_imageBase64');
 
-    uploadInput.onChange.listen((e) async {
-      final files = uploadInput.files;
-      if (files!.isEmpty) return;
+    // Convert to Base64 outside setState
+    _imageBase64 = base64Encode((await imageFile?.readAsBytes()) as List<int>);
 
-      final reader = html.FileReader();
-      reader.readAsDataUrl(files[0]); // Read as data URL for base64 encoding
-      reader.onLoadEnd.listen((e) {
-        setState(() {
-          _imageBase64 =
-              reader.result as String?; // Store the base64 image data
-          _selectedImage = null; // Clear the mobile file if any
-        });
-      });
+    debugPrint('After Base64 conversion: _imageBase64 = $_imageBase64');
+
+    // If you need to update the UI after Base64 conversion, call setState again
+    setState(() {
+      widget.onImageSelected(_imageBase64);
+      debugPrint('Callback called with _imageBase64 = $_imageBase64');
     });
   }
 
-  // Méthode pour gérer l'ajout d'image, en fonction de la plateforme
+  // Method to select an image (web)
+  Future<void> _pickImageWeb() async {
+    try {
+      final html.FileUploadInputElement uploadInput =
+          html.FileUploadInputElement();
+      uploadInput.accept = 'image/*'; // Only images
+      uploadInput.click(); // Open the dialog to select a file
+
+      uploadInput.onChange.listen((e) async {
+        final files = uploadInput.files;
+        if (files!.isEmpty) return;
+
+        final reader = html.FileReader();
+        reader.readAsDataUrl(files[0]); // Read as data URL for base64 encoding
+        reader.onLoadEnd.listen((e) {
+          setState(() {
+            _imageBase64 =
+                reader.result as String?; // Store the base64 image data
+            _selectedImage = null; // Clear the mobile file if any
+            widget.onImageSelected(_imageBase64);
+          });
+        });
+      });
+    } catch (e) {
+      print('Error picking image on web: $e');
+      // Handle the error
+    }
+  }
+
+  // Method to handle image adding, depending on the platform
   Future<void> _pickImage() async {
     if (kIsWeb) {
-      _pickImageWeb(); // Si sur le web, utiliser le gestionnaire web
+      _pickImageWeb(); // If on the web, use the web handler
     } else {
-      _pickImageMobile(); // Si sur mobile, utiliser ImagePicker
+      _pickImageMobile(); // If on mobile, use ImagePicker
     }
   }
 
@@ -94,7 +130,7 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
                             height: double.infinity,
                           )
                     : Image.file(
-                        _selectedImage!,
+                        _selectedImage! as File,
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
