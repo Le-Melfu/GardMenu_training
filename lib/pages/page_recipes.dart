@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/functions/recipe_service.dart';
 import 'package:gardmenu_training/widgets/molecules/recipe_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/recipe_model.dart';
@@ -32,10 +33,18 @@ class _RecipePageState extends State<RecipePage> {
   Future<void> _loadRecipes() async {
     final prefs = await SharedPreferences.getInstance();
     final String? recipesString = prefs.getString('recipes');
+
     if (recipesString != null) {
+      // Charger les recettes stockées dans SharedPreferences
       final List<dynamic> recipesJson = jsonDecode(recipesString);
       setState(() {
         _recipes = recipesJson.map((json) => Recipe.fromJson(json)).toList();
+      });
+    } else {
+      // Charger les recettes par défaut depuis le fichier JSON
+      final defaultRecipes = await RecipeService.loadDefaultRecipes();
+      setState(() {
+        _recipes = defaultRecipes.cast<Recipe>();
       });
     }
   }

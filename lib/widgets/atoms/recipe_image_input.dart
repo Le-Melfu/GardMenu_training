@@ -93,7 +93,7 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
       onTap: _pickImage,
       child: Container(
         width: double.infinity,
-        height: 150,
+        height: 250,
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(8),

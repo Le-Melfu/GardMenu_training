@@ -8,6 +8,7 @@ class TextCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       color: const Color.fromARGB(255, 255, 146, 106),
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(

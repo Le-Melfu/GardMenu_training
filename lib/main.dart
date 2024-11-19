@@ -13,13 +13,19 @@ class GardMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Gard Menu',
+      home: const HomePage(),
       theme: ThemeData(
         primarySwatch: Colors.green,
-        fontFamily: 'Roboto',
+        textTheme: TextTheme(bodyMedium: defaultFont),
         elevatedButtonTheme:
             ElevatedButtonThemeData(style: getCustomElevatedButtonStyle()),
       ),
-      home: const HomePage(),
     );
   }
 }
+
+const defaultFont = TextStyle(
+  fontFamily: 'Roboto',
+  fontSize: 16.0,
+  color: Colors.black,
+);

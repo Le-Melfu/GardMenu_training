@@ -16,9 +16,8 @@ class RecipeDetailPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image de la recette
+            //Image de la recette
             if (recipe.image != null)
               Image.memory(
                 base64Decode(recipe.image!.split(',').last),
@@ -26,33 +25,58 @@ class RecipeDetailPage extends StatelessWidget {
                 height: 220,
                 width: double.infinity,
               ),
-
             const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  // Etapes
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.55,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Étapes :',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 8),
+                        ...recipe.steps.asMap().entries.map((entry) {
+                          final stepNumber = entry.key + 1;
+                          final step = entry.value;
+                          return Text(
+                            '$stepNumber. $step',
+                            maxLines: 2,
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
 
-            // Ingrédients
-            Text(
-              'Ingredients:',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            ...recipe.ingredients.map((ingredient) => Text('- $ingredient')),
-
-            const SizedBox(height: 16),
-
-            // Etapes
-            Text(
-              'Étapes :',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            ...recipe.steps.asMap().entries.map((entry) {
-              final stepNumber = entry.key + 1;
-              final step = entry.value;
-              return Text('$stepNumber. $step');
-            }),
+                  //Ingrédients
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Ingredients:',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 8),
+                        ...recipe.ingredients
+                            .map((ingredient) => Text('- $ingredient')),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
+
+mixin constraints {}

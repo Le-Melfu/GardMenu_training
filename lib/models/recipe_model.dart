@@ -1,4 +1,3 @@
-
 class Recipe {
   final String name;
   final List<String> ingredients;
@@ -12,17 +11,6 @@ class Recipe {
     this.image,
   });
 
-  // Convertir un objet Recipe en JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'ingredients': ingredients,
-      'steps': steps,
-      'image': image,
-    };
-  }
-
-  // Convertir un JSON en objet Recipe
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
       name: json['name'],
@@ -30,5 +18,14 @@ class Recipe {
       steps: List<String>.from(json['steps']),
       image: json['image'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'ingredients': ingredients,
+      'steps': steps,
+      'image': image,
+    };
   }
 }

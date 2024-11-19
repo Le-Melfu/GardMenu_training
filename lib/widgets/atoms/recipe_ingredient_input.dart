@@ -19,7 +19,7 @@ class RecipeIngredientInput extends StatefulWidget {
 
 class _RecipeIngredientInputState extends State<RecipeIngredientInput> {
   // Liste des unités de mesure
-  final List<String> _units = ['g', 'ml', 'càc', 'càs'];
+  final List<String> _units = ['g', 'ml', 'càc', 'càs', ' '];
 
   @override
   Widget build(BuildContext context) {

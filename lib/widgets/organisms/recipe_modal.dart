@@ -63,6 +63,7 @@ class _RecipeModalState extends State<RecipeModal> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
