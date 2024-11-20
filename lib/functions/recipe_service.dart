@@ -10,7 +10,6 @@ class RecipeService {
       final List<dynamic> jsonData = jsonDecode(jsonString);
       return jsonData.map((data) => Recipe.fromJson(data)).toList();
     } catch (e) {
-      print('Erreur lors du chargement des recettes par défaut : $e');
       return [];
     }
   }

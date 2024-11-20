@@ -1,11 +1,46 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/pages/page_recipes.dart';
 import '../models/recipe_model.dart';
 
 class RecipeDetailPage extends StatelessWidget {
   final Recipe recipe;
+  final VoidCallback onDelete;
 
-  const RecipeDetailPage(this.recipe, {super.key});
+  const RecipeDetailPage({
+    super.key,
+    required this.recipe,
+    required this.onDelete,
+  });
+
+  void _confirmDelete(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content:
+              const Text('Êtes-vous sûr de vouloir supprimer cette recette ?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                onDelete();
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Supprimer'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Annuler'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +66,7 @@ class RecipeDetailPage extends StatelessWidget {
               child: Row(
                 children: [
                   // Etapes
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +89,7 @@ class RecipeDetailPage extends StatelessWidget {
                   ),
 
                   //Ingrédients
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * 0.3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,12 +106,16 @@ class RecipeDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            IconButton(
+                onPressed: () => _confirmDelete(context),
+                icon: Icon(Icons.delete))
           ],
         ),
       ),
     );
   }
 }
-
-mixin constraints {}

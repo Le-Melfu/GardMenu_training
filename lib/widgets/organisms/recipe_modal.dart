@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/models/recipe_model.dart';
 import '../atoms/recipe_ingredient_input.dart';
 import '../atoms/recipe_steps_input.dart';
 import '../atoms/recipe_image_input.dart';
-import '../../models/recipe_model.dart';
 
 class RecipeModal extends StatefulWidget {
-  final Function(Recipe) onAddRecipe;
+  final void Function(Recipe) onAddRecipe;
 
   const RecipeModal({super.key, required this.onAddRecipe});
 
@@ -18,6 +18,7 @@ class _RecipeModalState extends State<RecipeModal> {
   final List<RecipeIngredientInput> _ingredients = [RecipeIngredientInput()];
   final List<RecipeStepInput> _steps = [RecipeStepInput(stepNumber: 1)];
   String? _imageBase64;
+  bool _validationError = false;
 
   void _handleImageSelected(String? base64Image) {
     setState(() {
@@ -39,17 +40,56 @@ class _RecipeModalState extends State<RecipeModal> {
     });
   }
 
+  bool _validateInputs() {
+    if (_nameController.text.isEmpty) {
+      return false;
+    }
+
+    bool hasValidIngredients = _ingredients.any((input) {
+      return input.nameController.text.isNotEmpty &&
+          input.quantityController.text.isNotEmpty;
+    });
+
+    if (!hasValidIngredients) {
+      return false;
+    }
+
+    bool hasValidSteps = _steps.any((input) {
+      return input.controller.text.isNotEmpty;
+    });
+
+    if (!hasValidSteps) {
+      return false;
+    }
+
+    return true;
+  }
+
   // Méthode d'ajout d'une recette avec construction de la nouvelle recette
   void _addRecipe() {
-    final recipe = Recipe(
-      name: _nameController.text,
-      ingredients: _ingredients.map((input) => input.ingredient).toList(),
-      steps: _steps.map((input) => input.controller.text).toList(),
-      image: _imageBase64,
-    );
+    if (_validateInputs()) {
+      final recipe = Recipe(
+        name: _nameController.text,
+        ingredients: _ingredients
+            .where((input) =>
+                input.nameController.text.isNotEmpty &&
+                input.quantityController.text.isNotEmpty)
+            .map((input) => input.ingredient)
+            .toList(),
+        steps: _steps
+            .where((input) => input.controller.text.isNotEmpty)
+            .map((input) => input.controller.text)
+            .toList(),
+        image: _imageBase64,
+      );
 
-    widget.onAddRecipe(recipe); //Ajout de la nouvelle recette à la liste
-    Navigator.of(context).pop(); //Sortie de la modale
+      widget.onAddRecipe(recipe);
+      Navigator.of(context).pop();
+    } else {
+      setState(() {
+        _validationError = true;
+      });
+    }
   }
 
   @override
@@ -119,6 +159,16 @@ class _RecipeModalState extends State<RecipeModal> {
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
+              if (_validationError)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Text(
+                    'Veuillez remplir tous les champs requis.',
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  ),
+                ),
               const SizedBox(height: 16),
 
               // Bouton d'ajout de la recette

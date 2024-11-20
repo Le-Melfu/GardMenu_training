@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gardmenu_training/functions/recipe_service.dart';
+import 'package:gardmenu_training/models/recipe_model.dart';
 import 'package:gardmenu_training/widgets/molecules/recipe_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/recipe_model.dart';
 import '../widgets/organisms/recipe_modal.dart';
 
 class RecipePage extends StatefulWidget {
@@ -57,6 +57,19 @@ class _RecipePageState extends State<RecipePage> {
     _saveRecipes();
   }
 
+  void _deleteRecipe(Recipe recipe) {
+    setState(() {
+      _recipes.remove(recipe);
+    });
+    _saveRecipes();
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const RecipePage(),
+      ),
+    );
+  }
+
   // Fonction pour ouvrir la modale
   void _openRecipeModal() {
     showDialog(
@@ -101,7 +114,10 @@ class _RecipePageState extends State<RecipePage> {
                         childAspectRatio: 1, // Ratio largeur/hauteur
                       ),
                       itemBuilder: (context, index) {
-                        return RecipeCardWidget(recipe: _recipes[index]);
+                        return RecipeCardWidget(
+                          recipe: _recipes[index],
+                          onDelete: () => _deleteRecipe(_recipes[index]),
+                        );
                       },
                     ),
                   ),

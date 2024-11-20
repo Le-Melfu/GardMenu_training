@@ -5,8 +5,10 @@ import 'package:gardmenu_training/models/recipe_model.dart';
 
 class RecipeCardWidget extends StatelessWidget {
   final Recipe recipe;
+  final VoidCallback onDelete;
 
-  const RecipeCardWidget({super.key, required this.recipe});
+  const RecipeCardWidget(
+      {super.key, required this.recipe, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,10 @@ class RecipeCardWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RecipeDetailPage(recipe),
+                builder: (context) => RecipeDetailPage(
+                  recipe: recipe,
+                  onDelete: onDelete,
+                ),
               ),
             );
           },
