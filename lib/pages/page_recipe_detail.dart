@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:gardmenu_training/pages/page_recipes.dart';
-import '../models/recipe_model.dart';
+import 'package:gardmenu_training/models/recipe_model.dart';
+import 'package:gardmenu_training/providers/recipes_provider.dart';
+import 'package:provider/provider.dart';
 
 class RecipeDetailPage extends StatelessWidget {
   final Recipe recipe;
-  final VoidCallback onDelete;
 
   const RecipeDetailPage({
     super.key,
     required this.recipe,
-    required this.onDelete,
   });
 
   void _confirmDelete(BuildContext context) {
@@ -24,7 +23,8 @@ class RecipeDetailPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                onDelete();
+                Provider.of<RecipeProvider>(context, listen: false)
+                    .deleteRecipe(recipe);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
@@ -54,57 +54,63 @@ class RecipeDetailPage extends StatelessWidget {
           children: [
             //Image de la recette
             if (recipe.image != null)
-              Image.memory(
-                base64Decode(recipe.image!.split(',').last),
-                fit: BoxFit.cover,
-                height: 220,
+              Container(
                 width: double.infinity,
+                color: Color.fromARGB(255, 4, 139, 154),
+                child: Image.memory(
+                  base64Decode(recipe.image!.split(',').last),
+                  fit: BoxFit.contain,
+                  height: 220,
+                  width: double.infinity,
+                ),
               ),
             const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  // Etapes
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.55,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Étapes :',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 8),
-                        ...recipe.steps.asMap().entries.map((entry) {
-                          final stepNumber = entry.key + 1;
-                          final step = entry.value;
-                          return Text(
-                            '$stepNumber. $step',
-                            maxLines: 2,
-                          );
-                        }),
-                      ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    // Etapes
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.55,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Étapes :',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 8),
+                          ...recipe.steps.asMap().entries.map((entry) {
+                            final stepNumber = entry.key + 1;
+                            final step = entry.value;
+                            return Text(
+                              '$stepNumber. $step',
+                              maxLines: 2,
+                            );
+                          }),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  //Ingrédients
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Ingredients:',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 8),
-                        ...recipe.ingredients
-                            .map((ingredient) => Text('- $ingredient')),
-                      ],
+                    //Ingrédients
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Ingredients:',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 8),
+                          ...recipe.ingredients
+                              .map((ingredient) => Text('- $ingredient')),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(
