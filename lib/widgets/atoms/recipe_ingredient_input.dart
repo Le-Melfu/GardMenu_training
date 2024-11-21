@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/models/ingredient_model.dart';
 
 class RecipeIngredientInput extends StatefulWidget {
   final TextEditingController nameController = TextEditingController();
@@ -7,10 +8,11 @@ class RecipeIngredientInput extends StatefulWidget {
 
   RecipeIngredientInput({super.key});
 
-  String get ingredient {
+  Ingredient get ingredient {
     final name = nameController.text;
-    final quantity = quantityController.text;
-    return '$name $quantity $selectedUnit';
+    final quantity = double.tryParse(quantityController.text) ?? 0.0;
+    final measureUnit = selectedUnit;
+    return Ingredient(name: name, quantity: quantity, measureUnit: measureUnit);
   }
 
   @override
@@ -19,7 +21,7 @@ class RecipeIngredientInput extends StatefulWidget {
 
 class _RecipeIngredientInputState extends State<RecipeIngredientInput> {
   // Liste des unités de mesure
-  final List<String> _units = ['g', 'ml', 'càc', 'càs', ' '];
+  final List<String> _units = ['g', 'ml', 'càc', 'càs', ''];
 
   @override
   Widget build(BuildContext context) {

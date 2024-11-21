@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/models/ingredient_model.dart';
 import 'package:gardmenu_training/models/recipe_model.dart';
-import '../atoms/recipe_ingredient_input.dart';
-import '../atoms/recipe_steps_input.dart';
-import '../atoms/recipe_image_input.dart';
+import 'package:gardmenu_training/providers/recipes_provider.dart';
+import 'package:gardmenu_training/widgets/atoms/recipe_image_input.dart';
+import 'package:gardmenu_training/widgets/atoms/recipe_ingredient_input.dart';
+import 'package:gardmenu_training/widgets/atoms/recipe_steps_input.dart';
+import 'package:provider/provider.dart';
 
 class RecipeModal extends StatefulWidget {
-  final void Function(Recipe) onAddRecipe;
-
-  const RecipeModal({super.key, required this.onAddRecipe});
+  const RecipeModal({super.key});
 
   @override
   State<RecipeModal> createState() => _RecipeModalState();
@@ -74,8 +75,14 @@ class _RecipeModalState extends State<RecipeModal> {
             .where((input) =>
                 input.nameController.text.isNotEmpty &&
                 input.quantityController.text.isNotEmpty)
-            .map((input) => input.ingredient)
-            .toList(),
+            .map((input) {
+          final name = input.nameController.text;
+          final quantity =
+              double.tryParse(input.quantityController.text) ?? 0.0;
+          final measureUnit = input.selectedUnit;
+          return Ingredient(
+              name: name, quantity: quantity, measureUnit: measureUnit);
+        }).toList(),
         steps: _steps
             .where((input) => input.controller.text.isNotEmpty)
             .map((input) => input.controller.text)
@@ -83,7 +90,8 @@ class _RecipeModalState extends State<RecipeModal> {
         image: _imageBase64,
       );
 
-      widget.onAddRecipe(recipe);
+      // Add the recipe to the provider
+      Provider.of<RecipeProvider>(context, listen: false).addRecipe(recipe);
       Navigator.of(context).pop();
     } else {
       setState(() {
@@ -112,7 +120,7 @@ class _RecipeModalState extends State<RecipeModal> {
                         TextField(
                           controller: _nameController,
                           decoration: const InputDecoration(
-                            labelText: 'Nom du plat',
+                            labelText: 'Nom du plat *',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -120,8 +128,11 @@ class _RecipeModalState extends State<RecipeModal> {
 
                         // Section Ingredients
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           // Input des ingrédients avec le bouton d'ajout pour plusieurs ingrédients
                           children: [
+                            Text('Ingrédients* :', textAlign: TextAlign.start),
+                            SizedBox(height: 8),
                             ..._ingredients,
                             Align(
                               alignment: Alignment.centerRight,
@@ -148,7 +159,10 @@ class _RecipeModalState extends State<RecipeModal> {
 
               // Section Input des étapes de confection avec le bouton d'ajout pour plusieurs étapes
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text('Étapes* :', textAlign: TextAlign.start),
+                  SizedBox(height: 8),
                   ..._steps,
                   Align(
                     alignment: Alignment.centerRight,

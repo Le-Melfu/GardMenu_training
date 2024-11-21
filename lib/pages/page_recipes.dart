@@ -11,12 +11,7 @@ class RecipePage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return RecipeModal(
-          onAddRecipe: (recipe) {
-            Provider.of<RecipeProvider>(context, listen: false)
-                .addRecipe(recipe);
-          },
-        );
+        return RecipeModal();
       },
     );
   }

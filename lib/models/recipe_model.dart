@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:gardmenu_training/models/ingredient_model.dart';
+
 class Recipe {
   final String name;
-  final List<String> ingredients;
+  final List<Ingredient> ingredients;
   final List<String> steps;
   final String? image;
 
@@ -14,7 +17,8 @@ class Recipe {
   factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
       name: json['name'],
-      ingredients: List<String>.from(json['ingredients']),
+      ingredients: List<Ingredient>.from(json['ingredients']
+          .map((ingredient) => Ingredient.fromMap(ingredient))),
       steps: List<String>.from(json['steps']),
       image: json['image'],
     );
@@ -23,7 +27,8 @@ class Recipe {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'ingredients': ingredients,
+      'ingredients':
+          ingredients.map((ingredient) => ingredient.toMap()).toList(),
       'steps': steps,
       'image': image,
     };

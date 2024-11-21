@@ -68,11 +68,30 @@ class RecipeDetailPage extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Row(
+                child: Column(
                   children: [
+                    //Ingrédients
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Ingredients:',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const SizedBox(height: 8),
+                          ...recipe.ingredients.map((ingredient) => Text(
+                              '- ${ingredient.name} ${ingredient.quantity > 0 ? ingredient.quantity : ''} ${ingredient.measureUnit.isNotEmpty ? ingredient.measureUnit : ''}')),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(height: 16),
+
                     // Etapes
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.55,
+                      width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -89,23 +108,6 @@ class RecipeDetailPage extends StatelessWidget {
                               maxLines: 2,
                             );
                           }),
-                        ],
-                      ),
-                    ),
-
-                    //Ingrédients
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Ingredients:',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 8),
-                          ...recipe.ingredients
-                              .map((ingredient) => Text('- $ingredient')),
                         ],
                       ),
                     ),
