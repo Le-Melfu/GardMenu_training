@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:gardmenu_training/models/ingredient_model.dart';
 
 class Recipe {
