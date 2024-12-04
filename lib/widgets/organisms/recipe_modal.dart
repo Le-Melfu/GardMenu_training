@@ -5,6 +5,7 @@ import 'package:gardmenu_training/providers/recipes_provider.dart';
 import 'package:gardmenu_training/widgets/atoms/recipe_image_input.dart';
 import 'package:gardmenu_training/widgets/atoms/recipe_ingredient_input.dart';
 import 'package:gardmenu_training/widgets/atoms/recipe_steps_input.dart';
+import 'package:gardmenu_training/widgets/atoms/recipe_type_input.dart';
 import 'package:provider/provider.dart';
 
 class RecipeModal extends StatefulWidget {
@@ -18,12 +19,19 @@ class _RecipeModalState extends State<RecipeModal> {
   final TextEditingController _nameController = TextEditingController();
   final List<RecipeIngredientInput> _ingredients = [RecipeIngredientInput()];
   final List<RecipeStepInput> _steps = [RecipeStepInput(stepNumber: 1)];
+  String _type = 'Végétal';
   String? _imageBase64;
   bool _validationError = false;
 
   void _handleImageSelected(String? base64Image) {
     setState(() {
       _imageBase64 = base64Image;
+    });
+  }
+
+  void _handleTypeSelected(String selectedType) {
+    setState(() {
+      _type = selectedType;
     });
   }
 
@@ -71,6 +79,7 @@ class _RecipeModalState extends State<RecipeModal> {
     if (_validateInputs()) {
       final recipe = Recipe(
         name: _nameController.text,
+        type: _type,
         ingredients: _ingredients
             .where((input) =>
                 input.nameController.text.isNotEmpty &&
@@ -131,6 +140,12 @@ class _RecipeModalState extends State<RecipeModal> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           // Input des ingrédients avec le bouton d'ajout pour plusieurs ingrédients
                           children: [
+                            RecipeTypeInput(
+                              onTypeSelected: _handleTypeSelected,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
                             Text('Ingrédients* :', textAlign: TextAlign.start),
                             SizedBox(height: 8),
                             ..._ingredients,

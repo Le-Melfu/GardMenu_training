@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gardmenu_training/styles/style_elevated_button.dart';
 import 'package:provider/provider.dart';
 import 'package:gardmenu_training/pages/page_home.dart';
 import 'package:gardmenu_training/providers/recipes_provider.dart';
-import './styles/style_elevated_button.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(

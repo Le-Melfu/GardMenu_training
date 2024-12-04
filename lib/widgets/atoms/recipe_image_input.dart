@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:html' as html;
 import 'dart:convert'; // For base64 encoding
-// Import for image compression (optional)
+import 'dart:html' as html;
+import 'dart:io';
+
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RecipePictureInput extends StatefulWidget {
   final Function(String?) onImageSelected;
@@ -54,8 +54,7 @@ class _RecipePictureInputState extends State<RecipePictureInput> {
 
   Future<void> _pickImageWeb() async {
     try {
-      final html.FileUploadInputElement uploadInput =
-          html.FileUploadInputElement();
+      final uploadInput = html.FileUploadInputElement();
       uploadInput.accept = 'image/*';
       uploadInput.click();
 

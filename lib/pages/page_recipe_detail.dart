@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gardmenu_training/models/recipe_model.dart';
 import 'package:gardmenu_training/providers/recipes_provider.dart';
@@ -70,6 +71,12 @@ class RecipeDetailPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text("Type de proteines : ${recipe.type}"),
+                      ],
+                    ),
                     //Ingrédients
                     SizedBox(
                       width: double.infinity,

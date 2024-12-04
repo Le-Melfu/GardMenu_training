@@ -1,6 +1,7 @@
 [
   {
     "name": "Spaghetti Bolognese",
+    "type": "Viande Rouge",
     "ingredients": [
       {"name": "spaghetti", "quantity": 200, "measureUnit": "g"},
       {"name": "viande hachée", "quantity": 150, "measureUnit": "g"},
@@ -23,6 +24,7 @@
   },
   {
     "name": "Salade César",
+    "type": "Volaille",
     "ingredients": [
       {"name": "laitue romaine", "quantity": 1, "measureUnit": ""},
       {"name": "poulet grillé", "quantity": 200, "measureUnit": "g"},
@@ -41,6 +43,7 @@
   },
   {
     "name": "Quiche Lorraine",
+    "type": "Oeufs",
     "ingredients": [
       {"name": "pâte brisée", "quantity": 1, "measureUnit": ""},
       {"name": "lardons", "quantity": 200, "measureUnit": "g"},
@@ -62,6 +65,7 @@
   },
   {
     "name": "Poulet rôti",
+    "type": "Volaille",
     "ingredients": [
       {"name": "poulet entier", "quantity": 1, "measureUnit": ""},
       {"name": "gousses d'ail", "quantity": 3, "measureUnit": ""},
@@ -82,6 +86,7 @@
   },
   {
     "name": "Omelette aux champignons",
+    "type": "Oeufs",
     "ingredients": [
       {"name": "œufs", "quantity": 3, "measureUnit": ""},
       {"name": "champignons", "quantity": 100, "measureUnit": "g"},
@@ -100,6 +105,7 @@
   },
   {
     "name": "Ratatouille",
+    "type": "Végétal",
     "ingredients": [
       {"name": "courgettes", "quantity": 2, "measureUnit": ""},
       {"name": "aubergine", "quantity": 1, "measureUnit": ""},
@@ -120,6 +126,7 @@
   },
   {
     "name": "Tacos",
+    "type": "Viande Rouge",
     "ingredients": [
       {"name": "tortillas", "quantity": 4, "measureUnit": ""},
       {"name": "viande hachée", "quantity": 200, "measureUnit": "g"},
@@ -138,6 +145,7 @@
   },
   {
     "name": "Croque-Monsieur",
+    "type": "Porc",
     "ingredients": [
       {"name": "tranches de pain de mie", "quantity": 4, "measureUnit": ""},
       {"name": "tranches de jambon", "quantity": 2, "measureUnit": ""},
@@ -153,179 +161,7 @@
   },
   {
     "name": "Soupe de légumes",
-    "ingredients": [
-      {"name": "pommes de terre", "quantity": 2, "measureUnit": ""},
-      {"name": "carottes", "quantity": 2, "measureUnit": ""},
-      {"name": "poireau", "quantity": 1, "measureUnit": ""},
-      {"name": "oignon", "quantity": 1, "measureUnit": ""},
-      {"name": "gousses d'ail", "quantity": 2, "measureUnit": ""},
-      {"name": "bouillon de légumes", "quantity": 1000, "measureUnit": "ml"},
-      {"name": "sel", "quantity": "", "measureUnit": ""},
-      {"name": "poivre", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Couper les légumes en morceaux.",
-      "Faire revenir l'oignon et l'ail dans une casserole.",
-      "Ajouter les légumes et le bouillon.",
-      "Laisser cuire 40 minutes.",
-      "Mixer la soupe et assaisonner."
-    ],
-    "image": null
-  },
-  {
-    "name": "Spaghetti Bolognese",
-    "ingredients": [
-      {"name": "spaghetti", "quantity": 200, "measureUnit": "g"},
-      {"name": "viande hachée", "quantity": 150, "measureUnit": "g"},
-      {"name": "oignon", "quantity": 1, "measureUnit": ""},
-      {"name": "gousses d'ail", "quantity": 2, "measureUnit": ""},
-      {"name": "tomates concassées", "quantity": 400, "measureUnit": "g"},
-      {"name": "sel", "quantity": "", "measureUnit": ""},
-      {"name": "poivre", "quantity": "", "measureUnit": ""},
-      {"name": "basilic", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Faire cuire les spaghetti dans de l'eau bouillante salée.",
-      "Faire revenir l'oignon et l'ail hachés dans une poêle.",
-      "Ajouter la viande hachée et faire dorer.",
-      "Incorporer les tomates concassées et assaisonner.",
-      "Laisser mijoter 15 minutes.",
-      "Servir les spaghetti avec la sauce."
-    ],
-    "image": null
-  },
-  {
-    "name": "Salade César",
-    "ingredients": [
-      {"name": "laitue romaine", "quantity": 1, "measureUnit": ""},
-      {"name": "poulet grillé", "quantity": 200, "measureUnit": "g"},
-      {"name": "croûtons", "quantity": 50, "measureUnit": "g"},
-      {"name": "parmesan râpé", "quantity": 50, "measureUnit": "g"},
-      {"name": "sauce César", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Couper la laitue et disposer dans un saladier.",
-      "Ajouter le poulet grillé coupé en tranches.",
-      "Incorporer les croûtons et le parmesan.",
-      "Verser la sauce César et mélanger.",
-      "Servir frais."
-    ],
-    "image": null
-  },
-  {
-    "name": "Quiche Lorraine",
-    "ingredients": [
-      {"name": "pâte brisée", "quantity": 1, "measureUnit": ""},
-      {"name": "lardons", "quantity": 200, "measureUnit": "g"},
-      {"name": "œufs", "quantity": 3, "measureUnit": ""},
-      {"name": "crème fraîche", "quantity": 200, "measureUnit": "ml"},
-      {"name": "gruyère râpé", "quantity": 100, "measureUnit": "g"},
-      {"name": "sel", "quantity": "", "measureUnit": ""},
-      {"name": "poivre", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Préchauffer le four à 180°C.",
-      "Faire revenir les lardons dans une poêle.",
-      "Dans un bol, battre les œufs avec la crème fraîche.",
-      "Ajouter les lardons et le gruyère râpé.",
-      "Étaler la pâte dans un moule et verser la préparation.",
-      "Enfourner pendant 30 minutes."
-    ],
-    "image": null
-  },
-  {
-    "name": "Poulet rôti",
-    "ingredients": [
-      {"name": "poulet entier", "quantity": 1, "measureUnit": ""},
-      {"name": "gousses d'ail", "quantity": 3, "measureUnit": ""},
-      {"name": "citron", "quantity": 1, "measureUnit": ""},
-      {"name": "herbes de Provence", "quantity": "", "measureUnit": ""},
-      {"name": "huile d'olive", "quantity": "", "measureUnit": ""},
-      {"name": "sel", "quantity": "", "measureUnit": ""},
-      {"name": "poivre", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Préchauffer le four à 200°C.",
-      "Enduire le poulet d'huile d'olive, saler et poivrer.",
-      "Mettre les gousses d'ail et le citron coupé en deux dans le poulet.",
-      "Ajouter les herbes de Provence.",
-      "Enfourner pendant 1 heure 15 minutes."
-    ],
-    "image": null
-  },
-  {
-    "name": "Omelette aux champignons",
-    "ingredients": [
-      {"name": "œufs", "quantity": 3, "measureUnit": ""},
-      {"name": "champignons", "quantity": 100, "measureUnit": "g"},
-      {"name": "oignon", "quantity": 1, "measureUnit": ""},
-      {"name": "beurre", "quantity": 30, "measureUnit": "g"},
-      {"name": "sel", "quantity": "", "measureUnit": ""},
-      {"name": "poivre", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Faire revenir les champignons et l'oignon dans une poêle avec du beurre.",
-      "Battre les œufs dans un bol avec du sel et du poivre.",
-      "Verser les œufs dans la poêle et cuire à feu moyen.",
-      "Replier l'omelette et servir."
-    ],
-    "image": null
-  },
-  {
-    "name": "Ratatouille",
-    "ingredients": [
-      {"name": "courgettes", "quantity": 2, "measureUnit": ""},
-      {"name": "aubergine", "quantity": 1, "measureUnit": ""},
-      {"name": "poivron", "quantity": 1, "measureUnit": ""},
-      {"name": "tomates", "quantity": 2, "measureUnit": ""},
-      {"name": "oignon", "quantity": 1, "measureUnit": ""},
-      {"name": "gousses d'ail", "quantity": 2, "measureUnit": ""},
-      {"name": "herbes de Provence", "quantity": "", "measureUnit": ""},
-      {"name": "huile d'olive", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Couper les légumes en dés.",
-      "Faire revenir l'oignon et l'ail dans de l'huile d'olive.",
-      "Ajouter les légumes et cuire à feu doux.",
-      "Assaisonner avec les herbes de Provence et laisser mijoter 30 minutes."
-    ],
-    "image": null
-  },
-  {
-    "name": "Tacos",
-    "ingredients": [
-      {"name": "tortillas", "quantity": 4, "measureUnit": ""},
-      {"name": "viande hachée", "quantity": 200, "measureUnit": "g"},
-      {"name": "oignon", "quantity": 1, "measureUnit": ""},
-      {"name": "poivron", "quantity": 1, "measureUnit": ""},
-      {"name": "fromage râpé", "quantity": "", "measureUnit": ""},
-      {"name": "salsa", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Faire cuire la viande hachée avec l'oignon et le poivron hachés.",
-      "Réchauffer les tortillas.",
-      "Garnir les tortillas avec la viande, le fromage et la salsa.",
-      "Servir avec des légumes frais."
-    ],
-    "image": null
-  },
-  {
-    "name": "Croque-Monsieur",
-    "ingredients": [
-      {"name": "tranches de pain de mie", "quantity": 4, "measureUnit": ""},
-      {"name": "tranches de jambon", "quantity": 2, "measureUnit": ""},
-      {"name": "tranches de fromage", "quantity": 4, "measureUnit": ""},
-      {"name": "beurre", "quantity": "", "measureUnit": ""}
-    ],
-    "steps": [
-      "Beurrer les tranches de pain.",
-      "Ajouter une tranche de jambon et une tranche de fromage entre deux tranches de pain.",
-      "Faire cuire dans un appareil à croque-monsieur ou dans une poêle."
-    ],
-    "image": null
-  },
-  {
-    "name": "Soupe de légumes",
+    "type": "Végétal",
     "ingredients": [
       {"name": "pommes de terre", "quantity": 2, "measureUnit": ""},
       {"name": "carottes", "quantity": 2, "measureUnit": ""},
