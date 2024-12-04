@@ -1,12 +1,14 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/recipe_model.dart';
+
 import '../functions/recipe_service.dart';
+import '../models/recipe_model.dart';
 
 class RecipeProvider with ChangeNotifier {
   List<Recipe> _recipes = [];
-
+  Map<String, Recipe> generatedMenu = {};
   List<Recipe> get recipes => _recipes;
 
   RecipeProvider() {
@@ -44,5 +46,10 @@ class RecipeProvider with ChangeNotifier {
     _recipes.remove(recipe);
     _saveRecipes();
     notifyListeners();
+  }
+
+  void setGeneratedMenu(Map<String, Recipe> menu) {
+    generatedMenu = menu;
+    notifyListeners(); // Avertir les abonnés que l'état a changé
   }
 }
